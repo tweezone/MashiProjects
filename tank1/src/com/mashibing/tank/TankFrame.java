@@ -13,7 +13,8 @@ import java.awt.event.WindowEvent;
  * @Description com.mashibing.tank
  */
 public class TankFrame extends Frame {
-    int x=200, y=200;
+   Tank myTank=new Tank(200, 200, Dir.DOWN);
+    private static final int SPEED=10;
     public TankFrame(){
         setSize(800, 600);
         setResizable(false);
@@ -32,8 +33,9 @@ public class TankFrame extends Frame {
     }
     @Override
     public void paint(Graphics g){
-        g.fillRect(x, y, 50, 50);
-        //System.out.println("paint");
+        myTank.paint(g);
+
+
     }
     class MyKeyListener extends KeyAdapter {
     boolean bL = false;
@@ -41,8 +43,9 @@ public class TankFrame extends Frame {
     boolean bR = false;
     boolean bD = false;
         @Override
-        public void keyPressed(KeyEvent e) { int key=e.getKeyCode();
-            switch(key){
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
+            switch (key) {
                 case KeyEvent.VK_LEFT:
                     bL = true;
                     break;
@@ -62,6 +65,13 @@ public class TankFrame extends Frame {
 //            System.out.println("key pressed");
 //            x += 30;
 //            repaint();
+            setMainTankDir();
+        }
+        private void setMainTankDir() {
+            if(bL) myTank.setDir(Dir.LEFT);
+            if(bU) myTank.setDir(Dir.UP);
+            if(bR) myTank.setDir(Dir.RIGHT);
+            if(bD) myTank.setDir(Dir.DOWN);
         }
 
         @Override
@@ -83,6 +93,7 @@ public class TankFrame extends Frame {
                 default:
                     break;
             }
+            setMainTankDir();
         }
 
 
